@@ -1,7 +1,9 @@
 import { defineConfig } from 'sanity'
-import { structure } from './structure'
+import { structure } from '@/sanity/structure'
 import { visionTool } from '@sanity/vision'
-import { schemaTypes } from './schemaTypes'
+import { schemaTypes } from '@/sanity/schemaTypes'
+
+const singletonTypes = ['site']
 
 export default defineConfig({
 	name: 'default',
@@ -14,5 +16,7 @@ export default defineConfig({
 
 	schema: {
 		types: schemaTypes,
+		templates: (templates) =>
+			templates.filter(({ schemaType }) => !singletonTypes.includes(schemaType)),
 	},
 })

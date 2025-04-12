@@ -4,4 +4,10 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
+
+	server: {
+		fs: {
+			allow: ['sanity.cli.ts', 'sanity.config.ts'],
+		},
+	},
 })
