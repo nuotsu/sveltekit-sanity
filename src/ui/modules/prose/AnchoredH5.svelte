@@ -11,8 +11,6 @@
 		children: Snippet
 	} = $props()
 
-	$inspect(portableText)
-
 	const id = slug(portableText.value.children.reduce((acc, { text }) => acc + text, ''))
 </script>
 

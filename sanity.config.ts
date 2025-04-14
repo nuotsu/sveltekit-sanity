@@ -1,6 +1,8 @@
 import { defineConfig } from 'sanity'
 import { structure } from '@/sanity/structure'
 // import { presentation } from '@/sanity/presentation'
+import { dashboardTool, projectInfoWidget, projectUsersWidget } from '@sanity/dashboard'
+import { vercelWidget } from 'sanity-plugin-dashboard-widget-vercel'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from '@/sanity/schemaTypes'
 
@@ -16,6 +18,16 @@ export default defineConfig({
 	plugins: [
 		structure,
 		// presentation,
+		dashboardTool({
+			name: 'deployment',
+			title: 'Deployment',
+			widgets: [vercelWidget()],
+		}),
+		dashboardTool({
+			name: 'info',
+			title: 'Info',
+			widgets: [projectInfoWidget(), projectUsersWidget()],
+		}),
 		visionTool(),
 	],
 
