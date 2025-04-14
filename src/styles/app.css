@@ -1,4 +1,6 @@
 @import 'tailwindcss';
 
 @theme {
+	--color-bg: #fff;
+	--color-fg: #000;
 }

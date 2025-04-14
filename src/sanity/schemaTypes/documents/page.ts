@@ -13,6 +13,12 @@ export default defineType({
 			group: 'content',
 		}),
 		defineField({
+			name: 'modules',
+			type: 'array',
+			of: [{ type: 'richtext-module' }],
+			group: 'content',
+		}),
+		defineField({
 			name: 'metadata',
 			type: 'metadata',
 			group: 'metadata',

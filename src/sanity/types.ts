@@ -68,6 +68,29 @@ export type Geopoint = {
 	alt?: number
 }
 
+export type RichtextModule = {
+	_type: 'richtext-module'
+	content?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+		listItem?: 'bullet' | 'number'
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	tableOfContents?: boolean
+}
+
 export type Slug = {
 	_type: 'slug'
 	current?: string
@@ -105,6 +128,11 @@ export type Page = {
 	_updatedAt: string
 	_rev: string
 	title?: string
+	modules?: Array<
+		{
+			_key: string
+		} & RichtextModule
+	>
 	metadata?: Metadata
 }
 
@@ -229,6 +257,7 @@ export type AllSanitySchemaTypes =
 	| SanityImageDimensions
 	| SanityFileAsset
 	| Geopoint
+	| RichtextModule
 	| Slug
 	| LinkList
 	| Link
@@ -330,6 +359,11 @@ export type PAGE_QUERYResult = {
 	_updatedAt: string
 	_rev: string
 	title?: string
+	modules?: Array<
+		{
+			_key: string
+		} & RichtextModule
+	>
 	metadata?: Metadata
 } | null
 // Variable: PAGE_404_QUERY
@@ -341,6 +375,11 @@ export type PAGE_404_QUERYResult = {
 	_updatedAt: string
 	_rev: string
 	title?: string
+	modules?: Array<
+		{
+			_key: string
+		} & RichtextModule
+	>
 	metadata?: Metadata
 } | null
 

@@ -5,7 +5,7 @@
 	let site = $derived(page.data.site)
 </script>
 
-<header>
+<header class="bg-bg sticky top-0 border-b">
 	<a href="/">{site?.title}</a>
 
 	<nav>

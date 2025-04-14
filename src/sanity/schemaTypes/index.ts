@@ -8,6 +8,9 @@ import link from './objects/link'
 import linkList from './objects/link.list'
 import metadata from './objects/metadata'
 
+// modules
+import richtextModule from './modules/richtext-module'
+
 export const schemaTypes = [
 	// documents
 	site,
@@ -18,4 +21,7 @@ export const schemaTypes = [
 	link,
 	linkList,
 	metadata,
+
+	// modules
+	richtextModule,
 ]
