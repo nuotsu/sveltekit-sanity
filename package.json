@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@sanity/client": "^6.29.0",
 		"@sanity/vision": "^3.84.0",
+		"@sanity/visual-editing": "^2.13.18",
 		"groq": "^3.84.0",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
@@ -36,8 +37,8 @@
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
-		"svelte": "^5.0.0",
-		"svelte-check": "^4.0.0",
+		"svelte": "^5.26.3",
+		"svelte-check": "^4.1.6",
 		"tailwindcss": "^4.1.4",
 		"typescript": "^5.8.3",
 		"vite": "^6.2.5"

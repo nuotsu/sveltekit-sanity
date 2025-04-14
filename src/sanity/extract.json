@@ -326,7 +326,7 @@
     }
   },
   {
-    "name": "richtext-module",
+    "name": "prose",
     "type": "type",
     "value": {
       "type": "object",
@@ -335,7 +335,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "richtext-module"
+            "value": "prose"
           }
         },
         "content": {
@@ -521,6 +521,23 @@
           "type": "objectAttribute",
           "value": {
             "type": "boolean"
+          },
+          "optional": true
+        },
+        "tocPosition": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "left"
+              },
+              {
+                "type": "string",
+                "value": "right"
+              }
+            ]
           },
           "optional": true
         }
@@ -745,7 +762,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "richtext-module"
+              "name": "prose"
             }
           }
         },

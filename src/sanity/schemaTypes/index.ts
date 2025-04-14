@@ -9,7 +9,7 @@ import linkList from './objects/link.list'
 import metadata from './objects/metadata'
 
 // modules
-import richtextModule from './modules/richtext-module'
+import prose from './modules/prose'
 
 export const schemaTypes = [
 	// documents
@@ -23,5 +23,5 @@ export const schemaTypes = [
 	metadata,
 
 	// modules
-	richtextModule,
+	prose,
 ]

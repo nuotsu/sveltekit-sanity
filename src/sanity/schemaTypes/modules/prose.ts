@@ -3,8 +3,8 @@ import { VscSymbolKeyword } from 'react-icons/vsc'
 import { getBlockText } from 'sanitypress-utils'
 
 export default defineType({
-	name: 'richtext-module',
-	title: 'Richtext module',
+	name: 'prose',
+	title: 'Prose',
 	icon: VscSymbolKeyword,
 	type: 'object',
 	groups: [
@@ -30,6 +30,17 @@ export default defineType({
 			initialValue: false,
 			group: 'options',
 		}),
+		defineField({
+			name: 'tocPosition',
+			type: 'string',
+			options: {
+				list: ['left', 'right'],
+				layout: 'radio',
+			},
+			hidden: ({ parent }) => !parent.tableOfContents,
+			initialValue: 'left',
+			group: 'options',
+		}),
 	],
 	preview: {
 		select: {
@@ -37,7 +48,7 @@ export default defineType({
 		},
 		prepare: ({ content }) => ({
 			title: getBlockText(content),
-			subtitle: 'Richtext module',
+			subtitle: 'Prose',
 		}),
 	},
 })

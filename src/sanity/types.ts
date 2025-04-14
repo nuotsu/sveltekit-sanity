@@ -68,8 +68,8 @@ export type Geopoint = {
 	alt?: number
 }
 
-export type RichtextModule = {
-	_type: 'richtext-module'
+export type Prose = {
+	_type: 'prose'
 	content?: Array<{
 		children?: Array<{
 			marks?: Array<string>
@@ -89,6 +89,7 @@ export type RichtextModule = {
 		_key: string
 	}>
 	tableOfContents?: boolean
+	tocPosition?: 'left' | 'right'
 }
 
 export type Slug = {
@@ -131,7 +132,7 @@ export type Page = {
 	modules?: Array<
 		{
 			_key: string
-		} & RichtextModule
+		} & Prose
 	>
 	metadata?: Metadata
 }
@@ -257,7 +258,7 @@ export type AllSanitySchemaTypes =
 	| SanityImageDimensions
 	| SanityFileAsset
 	| Geopoint
-	| RichtextModule
+	| Prose
 	| Slug
 	| LinkList
 	| Link
@@ -351,7 +352,7 @@ export type SITE_QUERYResult = {
 
 // Source: ./src/routes/(frontend)/[...slug]/+page.server.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == $slug][0]
+// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		modules[]{			...,			_type == 'prose' => {				'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{					style,					'text': pt::text(@)				})			}		}	}
 export type PAGE_QUERYResult = {
 	_id: string
 	_type: 'page'
@@ -359,11 +360,34 @@ export type PAGE_QUERYResult = {
 	_updatedAt: string
 	_rev: string
 	title?: string
-	modules?: Array<
-		{
+	modules: Array<{
+		_key: string
+		_type: 'prose'
+		content?: Array<{
+			children?: Array<{
+				marks?: Array<string>
+				text?: string
+				_type: 'span'
+				_key: string
+			}>
+			style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+			listItem?: 'bullet' | 'number'
+			markDefs?: Array<{
+				href?: string
+				_type: 'link'
+				_key: string
+			}>
+			level?: number
+			_type: 'block'
 			_key: string
-		} & RichtextModule
-	>
+		}>
+		tableOfContents?: boolean
+		tocPosition?: 'left' | 'right'
+		headings: Array<{
+			style: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal' | null
+			text: string
+		}> | null
+	}> | null
 	metadata?: Metadata
 } | null
 // Variable: PAGE_404_QUERY
@@ -378,7 +402,7 @@ export type PAGE_404_QUERYResult = {
 	modules?: Array<
 		{
 			_key: string
-		} & RichtextModule
+		} & Prose
 	>
 	metadata?: Metadata
 } | null
@@ -388,7 +412,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
 	interface SanityQueries {
 		"*[_type == 'site'][0]{\n\t\t...,\n\t\theaderMenu->{ \n\t...,\n\titems[]{\n\t\t...,\n\t\tinternal->{ title, metadata }\n\t}\n },\n\t\tfooterMenu->{ \n\t...,\n\titems[]{\n\t\t...,\n\t\tinternal->{ title, metadata }\n\t}\n },\n\t}": SITE_QUERYResult
-		"*[_type == 'page' && metadata.slug.current == $slug][0]": PAGE_QUERYResult
+		"*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\tmodules[]{\n\t\t\t...,\n\t\t\t_type == 'prose' => {\n\t\t\t\t'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\t\t\tstyle,\n\t\t\t\t\t'text': pt::text(@)\n\t\t\t\t})\n\t\t\t}\n\t\t}\n\t}": PAGE_QUERYResult
 		"*[_type == 'page' && metadata.slug.current == '404'][0]": PAGE_404_QUERYResult
 	}
 }

@@ -1,4 +1,7 @@
 # TODO
 
-- update client.fetch to use Sanity Live API
+- moduleOptions
+- use Sanity Live API
+- presentation
 - global modules
+- dashboardTool()

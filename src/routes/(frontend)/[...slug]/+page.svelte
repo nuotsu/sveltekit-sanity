@@ -12,6 +12,4 @@
 	{/if}
 </svelte:head>
 
-<h1>{data.page.title}</h1>
-
 <ModuleResolver modules={data.page.modules} />

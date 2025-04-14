@@ -15,7 +15,7 @@ export default defineType({
 		defineField({
 			name: 'modules',
 			type: 'array',
-			of: [{ type: 'richtext-module' }],
+			of: [{ type: 'prose' }],
 			group: 'content',
 		}),
 		defineField({

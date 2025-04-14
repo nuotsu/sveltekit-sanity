@@ -4,7 +4,18 @@ import { error } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async ({ params }) => {
-	const PAGE_QUERY = defineQuery(`*[_type == 'page' && metadata.slug.current == $slug][0]`)
+	const PAGE_QUERY = defineQuery(`*[_type == 'page' && metadata.slug.current == $slug][0]{
+		...,
+		modules[]{
+			...,
+			_type == 'prose' => {
+				'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{
+					style,
+					'text': pt::text(@)
+				})
+			}
+		}
+	}`)
 	const page = await client.fetch(PAGE_QUERY, { slug: params.slug === '' ? 'index' : params.slug })
 
 	if (!page) {
