@@ -61,8 +61,7 @@
 		"scope": "typescript,typescriptreact",
 		"body": [
 			"defineField({",
-			"\tname: 'options',",
-			"\ttitle: 'Module options',",
+			"\tname: 'moduleOptions',",
 			"\ttype: 'module-options',",
 			"\tgroup: 'options',",
 			"}),",

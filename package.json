@@ -15,13 +15,13 @@
 	},
 	"dependencies": {
 		"@sanity/client": "^6.29.0",
-		"@sanity/vision": "^3.84.0",
+		"@sanity/vision": "^3.85.1",
 		"@sanity/visual-editing": "^2.13.18",
-		"groq": "^3.84.0",
+		"groq": "^3.85.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"react-icons": "^5.5.0",
-		"sanity": "^3.84.0",
+		"sanity": "^3.85.1",
 		"sanity-plugin-dashboard-widget-vercel": "^3.1.3",
 		"sanitypress-utils": "^0.0.6",
 		"styled-components": "^6.1.17"
@@ -29,19 +29,19 @@
 	"devDependencies": {
 		"@portabletext/svelte": "^3.0.0",
 		"@sanity/eslint-config-studio": "^5.0.2",
-		"@sveltejs/adapter-vercel": "^5.6.3",
-		"@sveltejs/kit": "^2.16.0",
-		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@sveltejs/adapter-vercel": "^5.7.0",
+		"@sveltejs/kit": "^2.20.7",
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@tailwindcss/vite": "^4.1.4",
-		"@types/react": "^19.1.1",
+		"@types/react": "^19.1.2",
 		"eslint": "^9.24.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
-		"svelte": "^5.26.3",
+		"svelte": "^5.27.0",
 		"svelte-check": "^4.1.6",
 		"tailwindcss": "^4.1.4",
 		"typescript": "^5.8.3",
-		"vite": "^6.2.5"
+		"vite": "^6.2.6"
 	}
 }

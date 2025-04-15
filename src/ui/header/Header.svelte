@@ -10,7 +10,6 @@
 		if (!header) return
 
 		function setHeaderHeight() {
-			console.log(header?.offsetHeight)
 			document.documentElement.style.setProperty(
 				'--header-height',
 				`${header?.offsetHeight ?? 0}px`,

@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 import { VscSymbolKeyword } from 'react-icons/vsc'
 import { getBlockText } from 'sanitypress-utils'
 
@@ -12,12 +12,11 @@ export default defineType({
 		{ name: 'options', title: 'Options' },
 	],
 	fields: [
-		// defineField({
-		// 	name: 'options',
-		// 	title: 'Module options',
-		// 	type: 'module-options',
-		// 	group: 'options',
-		// }),
+		defineField({
+			name: 'moduleOptions',
+			type: 'module-options',
+			group: 'options',
+		}),
 		defineField({
 			name: 'content',
 			type: 'array',

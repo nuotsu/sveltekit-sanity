@@ -70,6 +70,7 @@ export type Geopoint = {
 
 export type Prose = {
 	_type: 'prose'
+	moduleOptions?: ModuleOptions
 	content?: Array<{
 		children?: Array<{
 			marks?: Array<string>
@@ -90,6 +91,12 @@ export type Prose = {
 	}>
 	tableOfContents?: boolean
 	tocPosition?: 'left' | 'right'
+}
+
+export type ModuleOptions = {
+	_type: 'module-options'
+	hidden?: boolean
+	uid?: string
 }
 
 export type Slug = {
@@ -259,6 +266,7 @@ export type AllSanitySchemaTypes =
 	| SanityFileAsset
 	| Geopoint
 	| Prose
+	| ModuleOptions
 	| Slug
 	| LinkList
 	| Link
@@ -363,6 +371,7 @@ export type PAGE_QUERYResult = {
 	modules: Array<{
 		_key: string
 		_type: 'prose'
+		moduleOptions?: ModuleOptions
 		content?: Array<{
 			children?: Array<{
 				marks?: Array<string>
