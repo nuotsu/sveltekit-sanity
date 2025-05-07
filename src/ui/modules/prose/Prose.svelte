@@ -25,7 +25,7 @@
 </script>
 
 <section
-	class="grid {tableOfContents && tocPosition === 'left'
+	class="section grid {tableOfContents && tocPosition === 'left'
 		? 'lg:grid-cols-[auto_1fr]'
 		: 'lg:grid-cols-[1fr_auto]'}"
 	{...moduleProps(props)}

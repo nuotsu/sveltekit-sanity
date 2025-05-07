@@ -13,14 +13,25 @@ export default defineType({
 	],
 	fields: [
 		defineField({
-			name: 'moduleOptions',
-			type: 'module-options',
-			group: 'options',
-		}),
-		defineField({
 			name: 'content',
 			type: 'array',
-			of: [{ type: 'block' }],
+			of: [
+				{ type: 'block' },
+				defineField({
+					type: 'image',
+					name: 'Image',
+					fields: [
+						defineField({
+							name: 'alt',
+							type: 'string',
+						}),
+						defineField({
+							name: 'caption',
+							type: 'string',
+						}),
+					],
+				}),
+			],
 			group: 'content',
 		}),
 		defineField({
@@ -38,6 +49,11 @@ export default defineType({
 			},
 			hidden: ({ parent }) => !parent.tableOfContents,
 			initialValue: 'left',
+			group: 'options',
+		}),
+		defineField({
+			name: 'moduleOptions',
+			type: 'module-options',
 			group: 'options',
 		}),
 	],

@@ -15,7 +15,7 @@ export default defineType({
 		defineField({
 			name: 'modules',
 			type: 'array',
-			of: [{ type: 'prose' }],
+			of: [{ type: 'accordion-list' }, { type: 'prose' }],
 			group: 'content',
 		}),
 		defineField({

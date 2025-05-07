@@ -10,6 +10,7 @@ import metadata from './objects/metadata'
 import moduleOptions from './objects/module-options'
 
 // modules
+import accordionList from './modules/accordion-list'
 import prose from './modules/prose'
 
 export const schemaTypes = [
@@ -25,5 +26,6 @@ export const schemaTypes = [
 	moduleOptions,
 
 	// modules
+	accordionList,
 	prose,
 ]

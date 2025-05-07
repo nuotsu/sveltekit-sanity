@@ -28,7 +28,7 @@
 	<nav>
 		{#each site?.headerMenu?.items ?? [] as item}
 			{#if item._type === 'link'}
-				<Link link={item as any} />
+				<Link link={item as unknown as Sanity.Link} />
 			{/if}
 		{/each}
 	</nav>

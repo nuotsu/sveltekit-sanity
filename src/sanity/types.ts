@@ -70,8 +70,49 @@ export type Geopoint = {
 
 export type Prose = {
 	_type: 'prose'
+	content?: Array<
+		| {
+				children?: Array<{
+					marks?: Array<string>
+					text?: string
+					_type: 'span'
+					_key: string
+				}>
+				style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+				listItem?: 'bullet' | 'number'
+				markDefs?: Array<{
+					href?: string
+					_type: 'link'
+					_key: string
+				}>
+				level?: number
+				_type: 'block'
+				_key: string
+		  }
+		| {
+				asset?: {
+					_ref: string
+					_type: 'reference'
+					_weak?: boolean
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+				}
+				media?: unknown
+				hotspot?: SanityImageHotspot
+				crop?: SanityImageCrop
+				alt?: string
+				caption?: string
+				_type: 'Image'
+				_key: string
+		  }
+	>
+	tableOfContents?: boolean
+	tocPosition?: 'left' | 'right'
 	moduleOptions?: ModuleOptions
-	content?: Array<{
+}
+
+export type AccordionList = {
+	_type: 'accordion-list'
+	intro?: Array<{
 		children?: Array<{
 			marks?: Array<string>
 			text?: string
@@ -89,8 +130,33 @@ export type Prose = {
 		_type: 'block'
 		_key: string
 	}>
-	tableOfContents?: boolean
-	tocPosition?: 'left' | 'right'
+	items?: Array<{
+		summary?: string
+		content?: Array<{
+			children?: Array<{
+				marks?: Array<string>
+				text?: string
+				_type: 'span'
+				_key: string
+			}>
+			style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+			listItem?: 'bullet' | 'number'
+			markDefs?: Array<{
+				href?: string
+				_type: 'link'
+				_key: string
+			}>
+			level?: number
+			_type: 'block'
+			_key: string
+		}>
+		open?: boolean
+		_type: 'Accordion item'
+		_key: string
+	}>
+	connect?: boolean
+	generateSchema?: boolean
+	moduleOptions?: ModuleOptions
 }
 
 export type ModuleOptions = {
@@ -137,11 +203,34 @@ export type Page = {
 	_rev: string
 	title?: string
 	modules?: Array<
-		{
-			_key: string
-		} & Prose
+		| ({
+				_key: string
+		  } & AccordionList)
+		| ({
+				_key: string
+		  } & Prose)
 	>
 	metadata?: Metadata
+}
+
+export type Metadata = {
+	_type: 'metadata'
+	slug?: Slug
+	title?: string
+	description?: string
+	image?: {
+		asset?: {
+			_ref: string
+			_type: 'reference'
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+		}
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: 'image'
+	}
+	noIndex?: boolean
 }
 
 export type SanityImageCrop = {
@@ -201,26 +290,6 @@ export type SanityImageMetadata = {
 	isOpaque?: boolean
 }
 
-export type Metadata = {
-	_type: 'metadata'
-	slug?: Slug
-	title?: string
-	description?: string
-	image?: {
-		asset?: {
-			_ref: string
-			_type: 'reference'
-			_weak?: boolean
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-		}
-		media?: unknown
-		hotspot?: SanityImageHotspot
-		crop?: SanityImageCrop
-		_type: 'image'
-	}
-	noIndex?: boolean
-}
-
 export type Site = {
 	_id: string
 	_type: 'site'
@@ -266,17 +335,18 @@ export type AllSanitySchemaTypes =
 	| SanityFileAsset
 	| Geopoint
 	| Prose
+	| AccordionList
 	| ModuleOptions
 	| Slug
 	| LinkList
 	| Link
 	| Page
+	| Metadata
 	| SanityImageCrop
 	| SanityImageHotspot
 	| SanityImageAsset
 	| SanityAssetSourceData
 	| SanityImageMetadata
-	| Metadata
 	| Site
 	| Navigation
 export declare const internalGroqTypeReferenceTo: unique symbol
@@ -368,35 +438,103 @@ export type PAGE_QUERYResult = {
 	_updatedAt: string
 	_rev: string
 	title?: string
-	modules: Array<{
-		_key: string
-		_type: 'prose'
-		moduleOptions?: ModuleOptions
-		content?: Array<{
-			children?: Array<{
-				marks?: Array<string>
-				text?: string
-				_type: 'span'
+	modules: Array<
+		| {
 				_key: string
-			}>
-			style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-			listItem?: 'bullet' | 'number'
-			markDefs?: Array<{
-				href?: string
-				_type: 'link'
+				_type: 'accordion-list'
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				items?: Array<{
+					summary?: string
+					content?: Array<{
+						children?: Array<{
+							marks?: Array<string>
+							text?: string
+							_type: 'span'
+							_key: string
+						}>
+						style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+						listItem?: 'bullet' | 'number'
+						markDefs?: Array<{
+							href?: string
+							_type: 'link'
+							_key: string
+						}>
+						level?: number
+						_type: 'block'
+						_key: string
+					}>
+					open?: boolean
+					_type: 'Accordion item'
+					_key: string
+				}>
+				connect?: boolean
+				generateSchema?: boolean
+				moduleOptions?: ModuleOptions
+		  }
+		| {
 				_key: string
-			}>
-			level?: number
-			_type: 'block'
-			_key: string
-		}>
-		tableOfContents?: boolean
-		tocPosition?: 'left' | 'right'
-		headings: Array<{
-			style: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal' | null
-			text: string
-		}> | null
-	}> | null
+				_type: 'prose'
+				content?: Array<
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+					| {
+							asset?: {
+								_ref: string
+								_type: 'reference'
+								_weak?: boolean
+								[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+							}
+							media?: unknown
+							hotspot?: SanityImageHotspot
+							crop?: SanityImageCrop
+							alt?: string
+							caption?: string
+							_type: 'Image'
+							_key: string
+					  }
+				>
+				tableOfContents?: boolean
+				tocPosition?: 'left' | 'right'
+				moduleOptions?: ModuleOptions
+				headings: Array<{
+					style: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal' | null
+					text: string
+				}> | null
+		  }
+	> | null
 	metadata?: Metadata
 } | null
 // Variable: PAGE_404_QUERY
@@ -409,9 +547,12 @@ export type PAGE_404_QUERYResult = {
 	_rev: string
 	title?: string
 	modules?: Array<
-		{
-			_key: string
-		} & Prose
+		| ({
+				_key: string
+		  } & AccordionList)
+		| ({
+				_key: string
+		  } & Prose)
 	>
 	metadata?: Metadata
 } | null
