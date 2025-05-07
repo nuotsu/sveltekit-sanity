@@ -19,7 +19,7 @@ export default defineType({
 				{ type: 'block' },
 				defineField({
 					type: 'image',
-					name: 'Image',
+					name: 'image',
 					fields: [
 						defineField({
 							name: 'alt',

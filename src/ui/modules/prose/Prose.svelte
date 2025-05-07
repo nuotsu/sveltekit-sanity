@@ -7,6 +7,7 @@
 	import AnchoredH4 from './AnchoredH4.svelte'
 	import AnchoredH5 from './AnchoredH5.svelte'
 	import AnchoredH6 from './AnchoredH6.svelte'
+	import ProseImage from './ProseImage.svelte'
 	import type { Prose } from '@/sanity/types'
 
 	let {
@@ -56,6 +57,9 @@
 					h4: AnchoredH4,
 					h5: AnchoredH5,
 					h6: AnchoredH6,
+				},
+				types: {
+					image: ProseImage,
 				},
 			}}
 		/>
