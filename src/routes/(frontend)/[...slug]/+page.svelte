@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ModuleResolver from '@/ui/modules/ModuleResolver.svelte'
+	import type { Page } from '@/sanity/types'
 
 	let { data } = $props()
 </script>
@@ -12,4 +13,6 @@
 	{/if}
 </svelte:head>
 
-<ModuleResolver modules={data.page.modules} />
+{#if data.page.modules}
+	<ModuleResolver modules={data.page.modules as Page['modules']} />
+{/if}

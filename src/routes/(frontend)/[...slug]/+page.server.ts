@@ -12,7 +12,11 @@ export const load: PageServerLoad = async ({ params }) => {
 				'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{
 					style,
 					'text': pt::text(@)
-				})
+				}),
+				content[]{
+					...,
+					_type == 'image' => { asset-> }
+				}
 			}
 		}
 	}`)

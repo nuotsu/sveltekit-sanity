@@ -20,6 +20,9 @@ export default defineType({
 				defineField({
 					type: 'image',
 					name: 'image',
+					options: {
+						hotspot: true,
+					},
 					fields: [
 						defineField({
 							name: 'alt',

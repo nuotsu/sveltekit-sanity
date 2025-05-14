@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { urlFor } from '$lib/sanity/image'
-	import type { SanityImageAsset } from '@@/src/sanity/types'
+	import Img from '@/ui/asset/Img.svelte'
+	import type { SanityImageAsset } from '@/sanity/types'
 	import type { BlockComponentProps } from '@portabletext/svelte'
 
 	let {
@@ -14,11 +14,15 @@
 		alt: string
 		caption: string
 	}>
+
+	$inspect(asset)
 </script>
 
 {#if asset}
+	<!-- TODO: crop/hotspot (https://dev.to/webby/crop-it-like-its-hot-cropping-images-in-sanity-v3-2i1e) -->
+
 	<figure class="text-center">
-		<img src={urlFor(asset).auto('format').url()} {alt} loading="lazy" />
+		<Img image={asset as any} {alt} loading="lazy" />
 
 		{#if caption}
 			<figcaption>{caption}</figcaption>

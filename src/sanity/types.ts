@@ -101,13 +101,42 @@ export type Prose = {
 				crop?: SanityImageCrop
 				alt?: string
 				caption?: string
-				_type: 'Image'
+				_type: 'image'
 				_key: string
 		  }
 	>
 	tableOfContents?: boolean
 	tocPosition?: 'left' | 'right'
 	moduleOptions?: ModuleOptions
+}
+
+export type HeroSplit = {
+	_type: 'hero.split'
+	content?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+		listItem?: 'bullet' | 'number'
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	assets?: Array<
+		{
+			_key: string
+		} & Img
+	>
+	assetOnRight?: boolean
+	assetBelowContent?: boolean
 }
 
 export type AccordionList = {
@@ -195,6 +224,40 @@ export type Link = {
 	params?: string
 }
 
+export type Img = {
+	_type: 'img'
+	image?: {
+		asset?: {
+			_ref: string
+			_type: 'reference'
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+		}
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: 'image'
+	}
+	responsive?: Array<{
+		image?: {
+			asset?: {
+				_ref: string
+				_type: 'reference'
+				_weak?: boolean
+				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+			}
+			media?: unknown
+			hotspot?: SanityImageHotspot
+			crop?: SanityImageCrop
+			_type: 'image'
+		}
+		media?: string
+		_key: string
+	}>
+	alt?: string
+	loading?: 'lazy' | 'eager'
+}
+
 export type Page = {
 	_id: string
 	_type: 'page'
@@ -206,6 +269,9 @@ export type Page = {
 		| ({
 				_key: string
 		  } & AccordionList)
+		| ({
+				_key: string
+		  } & HeroSplit)
 		| ({
 				_key: string
 		  } & Prose)
@@ -335,11 +401,13 @@ export type AllSanitySchemaTypes =
 	| SanityFileAsset
 	| Geopoint
 	| Prose
+	| HeroSplit
 	| AccordionList
 	| ModuleOptions
 	| Slug
 	| LinkList
 	| Link
+	| Img
 	| Page
 	| Metadata
 	| SanityImageCrop
@@ -430,7 +498,7 @@ export type SITE_QUERYResult = {
 
 // Source: ./src/routes/(frontend)/[...slug]/+page.server.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		modules[]{			...,			_type == 'prose' => {				'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{					style,					'text': pt::text(@)				})			}		}	}
+// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		modules[]{			...,			_type == 'prose' => {				'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{					style,					'text': pt::text(@)				}),				content[]{					...,					_type == 'image' => { asset-> }				}			}		}	}
 export type PAGE_QUERYResult = {
 	_id: string
 	_type: 'page'
@@ -490,8 +558,37 @@ export type PAGE_QUERYResult = {
 		  }
 		| {
 				_key: string
+				_type: 'hero.split'
+				content?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				assets?: Array<
+					{
+						_key: string
+					} & Img
+				>
+				assetOnRight?: boolean
+				assetBelowContent?: boolean
+		  }
+		| {
+				_key: string
 				_type: 'prose'
-				content?: Array<
+				content: Array<
 					| {
 							children?: Array<{
 								marks?: Array<string>
@@ -511,21 +608,37 @@ export type PAGE_QUERYResult = {
 							_key: string
 					  }
 					| {
-							asset?: {
-								_ref: string
-								_type: 'reference'
-								_weak?: boolean
-								[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-							}
+							asset: {
+								_id: string
+								_type: 'sanity.imageAsset'
+								_createdAt: string
+								_updatedAt: string
+								_rev: string
+								originalFilename?: string
+								label?: string
+								title?: string
+								description?: string
+								altText?: string
+								sha1hash?: string
+								extension?: string
+								mimeType?: string
+								size?: number
+								assetId?: string
+								uploadId?: string
+								path?: string
+								url?: string
+								metadata?: SanityImageMetadata
+								source?: SanityAssetSourceData
+							} | null
 							media?: unknown
 							hotspot?: SanityImageHotspot
 							crop?: SanityImageCrop
 							alt?: string
 							caption?: string
-							_type: 'Image'
+							_type: 'image'
 							_key: string
 					  }
-				>
+				> | null
 				tableOfContents?: boolean
 				tocPosition?: 'left' | 'right'
 				moduleOptions?: ModuleOptions
@@ -552,6 +665,9 @@ export type PAGE_404_QUERYResult = {
 		  } & AccordionList)
 		| ({
 				_key: string
+		  } & HeroSplit)
+		| ({
+				_key: string
 		  } & Prose)
 	>
 	metadata?: Metadata
@@ -562,7 +678,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
 	interface SanityQueries {
 		"*[_type == 'site'][0]{\n\t\t...,\n\t\theaderMenu->{ \n\t...,\n\titems[]{\n\t\t...,\n\t\tinternal->{ title, metadata }\n\t}\n },\n\t\tfooterMenu->{ \n\t...,\n\titems[]{\n\t\t...,\n\t\tinternal->{ title, metadata }\n\t}\n },\n\t}": SITE_QUERYResult
-		"*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\tmodules[]{\n\t\t\t...,\n\t\t\t_type == 'prose' => {\n\t\t\t\t'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\t\t\tstyle,\n\t\t\t\t\t'text': pt::text(@)\n\t\t\t\t})\n\t\t\t}\n\t\t}\n\t}": PAGE_QUERYResult
+		"*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\tmodules[]{\n\t\t\t...,\n\t\t\t_type == 'prose' => {\n\t\t\t\t'headings': select(tableOfContents => content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\t\t\tstyle,\n\t\t\t\t\t'text': pt::text(@)\n\t\t\t\t}),\n\t\t\t\tcontent[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'image' => { asset-> }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}": PAGE_QUERYResult
 		"*[_type == 'page' && metadata.slug.current == '404'][0]": PAGE_404_QUERYResult
 	}
 }

@@ -15,7 +15,7 @@ export default defineType({
 		defineField({
 			name: 'modules',
 			type: 'array',
-			of: [{ type: 'accordion-list' }, { type: 'prose' }],
+			of: [{ type: 'accordion-list' }, { type: 'hero.split' }, { type: 'prose' }],
 			group: 'content',
 		}),
 		defineField({

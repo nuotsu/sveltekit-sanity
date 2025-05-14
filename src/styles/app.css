@@ -49,7 +49,7 @@
 /* prose */
 
 @utility prose {
-	@apply space-y-2 leading-relaxed;
+	@apply headings:text-balance space-y-2 leading-relaxed;
 
 	h1 {
 		@apply h1 text-3xl;
