@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte'
 	import { renderStudio } from 'sanity'
 	import config from '@@/sanity.config'
 
 	let studio: HTMLDivElement
 
-	onMount(() => {
-		if (studio) {
-			renderStudio(studio, config)
+	$effect(() => {
+		if (studioEl) {
+			renderStudio(studioEl, config)
 		}
 	})
 </script>
